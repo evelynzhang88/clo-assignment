@@ -1,0 +1,43 @@
+.app-header {
+  width: 100%;
+  padding: 1.5rem 2rem;
+  background: transparent;
+
+  .header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #4fc3f7; // Light blue
+    letter-spacing: 0.05em;
+  }
+
+  .optional-feature-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    background: #9c27b0; // Purple
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.05em;
+
+    &:hover {
+      background: #7b1fa2;
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
