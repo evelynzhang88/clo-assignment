@@ -1,7 +1,8 @@
 .app-header {
   width: 100%;
-  padding: 1.5rem 2rem;
-  background: transparent;
+  padding: 1rem 2rem;
+  background: #000;
+  height: 60px;
 
   .header-content {
     max-width: 1400px;
@@ -12,10 +13,35 @@
   }
 
   .logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #4fc3f7; // Light blue
-    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    height: auto;
+    max-width: 80px;
+    height: 20px;
+    img {
+      max-width: auto;
+      height: 100%;
+      display: block;
+    }
+
+    .logo-desktop {
+      display: block;
+    }
+
+    .logo-mobile {
+      display: none;
+    }
+
+    // Show mobile logo on screens < 1200px
+    @media (max-width: 1199px) {
+      .logo-desktop {
+        display: none;
+      }
+
+      .logo-mobile {
+        display: block;
+      }
+    }
   }
 
   .optional-feature-btn {

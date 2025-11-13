@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import { setFilters } from '../store/slices/contentSlice'
 import './PricingSlider.scss'
@@ -44,9 +44,12 @@ export default function PricingSlider() {
   if (!isPaidSelected) {
     return (
       <div className="pricing-slider disabled">
-        <h3>Price Range</h3>
-        <div className="slider-disabled-message">
-          Select "Paid" option to enable price filtering
+        <div className="slider-container">
+          <div className="slider-wrapper">
+            <div className="slider-disabled-message">
+              Select "Paid" option to enable price filtering
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -57,12 +60,8 @@ export default function PricingSlider() {
 
   return (
     <div className="pricing-slider">
-      <h3>Price Range</h3>
       <div className="slider-container">
-        <div className="slider-values">
-          <span className="value-label">${minValue}</span>
-          <span className="value-label">{maxValue === MAX_PRICE ? `$${MAX_PRICE}+` : `$${maxValue}`}</span>
-        </div>
+        <span className="value-label value-label-min">${minValue}</span>
         <div className="slider-wrapper">
           <div className="slider-track">
             <div
@@ -90,6 +89,7 @@ export default function PricingSlider() {
             className="slider-input slider-input-max"
           />
         </div>
+        <span className="value-label value-label-max">{maxValue === MAX_PRICE ? `$${MAX_PRICE}+` : `$${maxValue}`}</span>
       </div>
     </div>
   )

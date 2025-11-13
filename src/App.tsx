@@ -37,9 +37,11 @@ function App() {
       <div className="app-content">
         <KeywordSearch />
         <div className="filters-section">
-          <PricingFilter />
-          <div className="slider-reset-group">
-            <PricingSlider />
+          <div className="filters-section-top">
+            <div className="slider-reset-group">
+              <PricingFilter />
+              <PricingSlider />
+            </div>
             <ResetButton />
           </div>
           <SortDropdown />

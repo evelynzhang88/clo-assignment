@@ -7,15 +7,15 @@
     width: 100%;
     padding: 1rem 3.5rem 1rem 1.5rem;
     font-size: 1rem;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
+    border-radius: 0;
     outline: none;
-    background: rgba(255, 255, 255, 0.05);
+    background: #212025;
     color: white;
     transition: all 0.2s ease;
+    border: none;
 
     &:focus {
-      border-color: rgba(255, 255, 255, 0.4);
+      // border-color: rgba(255, 255, 255, 0.4);
       background: rgba(255, 255, 255, 0.08);
     }
 
