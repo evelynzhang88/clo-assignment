@@ -1,6 +1,6 @@
 export type PricingOption = 'Paid' | 'Free' | 'View Only'
 
-export type SortOption = 'Relevance' | 'Item Name' | 'Higher Price' | 'Lower Price'
+export type SortOption = 'Item Name' | 'Higher Price' | 'Lower Price'
 
 export interface ContentItem {
   id: string

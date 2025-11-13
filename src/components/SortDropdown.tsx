@@ -3,7 +3,7 @@ import { setFilters } from '../store/slices/contentSlice'
 import type { SortOption } from '../types/content'
 import './SortDropdown.scss'
 
-const SORT_OPTIONS: SortOption[] = ['Relevance', 'Item Name', 'Higher Price', 'Lower Price']
+const SORT_OPTIONS: SortOption[] = ['Item Name', 'Higher Price', 'Lower Price']
 
 export default function SortDropdown() {
   const dispatch = useAppDispatch()

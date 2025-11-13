@@ -20,7 +20,7 @@ const initialState: ContentState = {
   filters: {
     pricingOptions: [],
     keyword: '',
-    sortBy: 'Relevance',
+    sortBy: 'Item Name',
     priceRange: { min: 0, max: 999 },
   },
   isLoading: false,
@@ -37,6 +37,61 @@ export const loadContent = createAsyncThunk(
   }
 )
 
+// Helper function to apply filters to items
+function applyFiltersToItems(items: ContentItem[], filters: ContentFilters): ContentItem[] {
+  let filtered = [...items]
+
+  // Apply pricing filter
+  if (filters.pricingOptions.length > 0) {
+    filtered = filtered.filter((item) =>
+      filters.pricingOptions.includes(item.pricingOption)
+    )
+  }
+
+  // Apply keyword filter
+  if (filters.keyword.trim()) {
+    const keyword = filters.keyword.toLowerCase()
+    filtered = filtered.filter(
+      (item) =>
+        item.userName.toLowerCase().includes(keyword) ||
+        item.title.toLowerCase().includes(keyword)
+    )
+  }
+
+  // Apply price range filter (only for Paid items)
+  if (filters.pricingOptions.includes('Paid')) {
+    filtered = filtered.filter((item) => {
+      if (item.pricingOption === 'Paid' && item.price !== undefined) {
+        return (
+          item.price >= filters.priceRange.min &&
+          item.price <= filters.priceRange.max
+        )
+      }
+      // Non-Paid items pass through
+      return item.pricingOption !== 'Paid'
+    })
+  }
+
+  // Apply sorting
+  filtered.sort((a, b) => {
+    switch (filters.sortBy) {
+      case 'Higher Price':
+        const priceA = a.price ?? 0
+        const priceB = b.price ?? 0
+        return priceB - priceA
+      case 'Lower Price':
+        const priceA2 = a.price ?? 0
+        const priceB2 = b.price ?? 0
+        return priceA2 - priceB2
+      case 'Item Name':
+      default:
+        return a.title.localeCompare(b.title)
+    }
+  })
+
+  return filtered
+}
+
 const contentSlice = createSlice({
   name: 'content',
   initialState,
@@ -49,7 +104,7 @@ const contentSlice = createSlice({
       state.filters = {
         pricingOptions: [],
         keyword: '',
-        sortBy: 'Relevance',
+        sortBy: 'Item Name',
         priceRange: { min: 0, max: 999 },
       }
       state.currentChunk = 1
@@ -61,59 +116,7 @@ const contentSlice = createSlice({
       state.currentChunk = nextChunk
     },
     applyFilters: (state) => {
-      let filtered = [...state.items]
-
-      // Apply pricing filter
-      if (state.filters.pricingOptions.length > 0) {
-        filtered = filtered.filter((item) =>
-          state.filters.pricingOptions.includes(item.pricingOption)
-        )
-      }
-
-      // Apply keyword filter
-      if (state.filters.keyword.trim()) {
-        const keyword = state.filters.keyword.toLowerCase()
-        filtered = filtered.filter(
-          (item) =>
-            item.userName.toLowerCase().includes(keyword) ||
-            item.title.toLowerCase().includes(keyword)
-        )
-      }
-
-      // Apply price range filter (only for Paid items)
-      if (state.filters.pricingOptions.includes('Paid')) {
-        filtered = filtered.filter((item) => {
-          if (item.pricingOption === 'Paid' && item.price !== undefined) {
-            return (
-              item.price >= state.filters.priceRange.min &&
-              item.price <= state.filters.priceRange.max
-            )
-          }
-          // Non-Paid items pass through
-          return item.pricingOption !== 'Paid'
-        })
-      }
-
-      // Apply sorting
-      filtered.sort((a, b) => {
-        switch (state.filters.sortBy) {
-          case 'Higher Price':
-            const priceA = a.price ?? 0
-            const priceB = b.price ?? 0
-            return priceB - priceA
-          case 'Lower Price':
-            const priceA2 = a.price ?? 0
-            const priceB2 = b.price ?? 0
-            return priceA2 - priceB2
-          case 'Item Name':
-            return a.title.localeCompare(b.title)
-          case 'Relevance':
-          default:
-            // Relevance keeps original order (no sorting)
-            return 0
-        }
-      })
-
+      const filtered = applyFiltersToItems(state.items, state.filters)
       state.filteredItems = filtered
       state.currentChunk = 1
       state.displayedItems = filtered.slice(0, state.chunkSize)
@@ -128,8 +131,12 @@ const contentSlice = createSlice({
       .addCase(loadContent.fulfilled, (state, action) => {
         state.isLoading = false
         state.items = action.payload
-        state.filteredItems = action.payload
-        state.displayedItems = action.payload.slice(0, state.chunkSize)
+        
+        // Apply current filters to the newly loaded data
+        const filtered = applyFiltersToItems(action.payload, state.filters)
+        state.filteredItems = filtered
+        state.currentChunk = 1
+        state.displayedItems = filtered.slice(0, state.chunkSize)
       })
       .addCase(loadContent.rejected, (state, action) => {
         state.isLoading = false
