@@ -10,14 +10,16 @@ function ContentCard({ item }: { item: ContentItem }) {
       <div className="content-photo">
         <img src={item.photo} alt={item.title} />
       </div>
-      <div className="content-info">
-        <div className="content-user">{item.userName}</div>
-        <div className="content-title">{item.title}</div>
+      <div className="content-footer">
+        <div className="content-info">
+          <div className="content-title">{item.title}</div>
+          <div className="content-user">{item.userName}</div>
+        </div>
         <div className="content-pricing">
           {item.pricingOption === 'Paid' ? (
             <span className="price">${item.price?.toFixed(2)}</span>
           ) : (
-            <span className="pricing-option">{item.pricingOption === 'Free' ? 'FREE' : item.pricingOption.toUpperCase()}</span>
+            <span className="pricing-option">{item.pricingOption === 'Free' ? 'FREE' : item.pricingOption}</span>
           )}
         </div>
       </div>
@@ -31,9 +33,11 @@ function SkeletonCard() {
       <div className="content-photo skeleton-photo">
         <div className="skeleton-shimmer" />
       </div>
-      <div className="content-info">
-        <div className="skeleton-line skeleton-user" />
-        <div className="skeleton-line skeleton-title" />
+      <div className="content-footer">
+        <div className="content-info">
+          <div className="skeleton-line skeleton-title" />
+          <div className="skeleton-line skeleton-user" />
+        </div>
         <div className="skeleton-line skeleton-pricing" />
       </div>
     </div>

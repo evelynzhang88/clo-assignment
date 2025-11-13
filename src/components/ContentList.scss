@@ -22,25 +22,24 @@
   }
 
   .content-card {
-    background: rgba(255, 255, 255, 0.05);
-    // border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
     border-radius: 0;
     overflow: hidden;
     transition: all 0.2s ease;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
 
     &:hover {
       transform: translateY(-4px);
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.2);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     }
 
     .content-photo {
       width: 100%;
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 1 / 1;
       overflow: hidden;
-      background: rgba(255, 255, 255, 0.05);
+      background: #e8e8e8;
 
       img {
         width: 100%;
@@ -49,38 +48,51 @@
       }
     }
 
-    .content-info {
+    .content-footer {
       padding: 1rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
 
-      .content-user {
-        font-size: 0.85rem;
-        color: rgba(255, 255, 255, 0.6);
-        margin-bottom: 0.5rem;
-        font-weight: 400;
+      .content-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        flex: 1;
       }
 
       .content-title {
-        font-size: 1rem;
+        font-size: 0.85rem;
         color: white;
-        margin-bottom: 0.75rem;
-        font-weight: 600;
+        font-weight: 400;
         line-height: 1.4;
+        margin: 0;
+      }
+
+      .content-user {
+        font-size: 0.8rem;
+        color: white;
+        font-weight: 400;
+        margin: 0;
       }
 
       .content-pricing {
         display: flex;
         align-items: center;
+        flex-shrink: 0;
 
         .price {
-          font-size: 1rem;
-          font-weight: 700;
-          color: #4fc3f7;
+          font-size: 1.2rem;
+          font-weight: 400;
+          color: white;
         }
 
         .pricing-option {
-          font-size: 0.9rem;
-          color: rgba(255, 255, 255, 0.7);
-          font-weight: 500;
+          font-size: 1.2rem;
+          color: white;
+          font-weight: 400;
         }
       }
     }
@@ -105,7 +117,7 @@
     .skeleton-photo {
       position: relative;
       overflow: hidden;
-      background: #e0e0e0;
+      background: #e8e8e8;
 
       .skeleton-shimmer {
         position: absolute;
@@ -123,11 +135,28 @@
       }
     }
 
+    .content-footer {
+      background: #2a2a2a;
+      padding: 1rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+
+      .content-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        flex: 1;
+      }
+    }
+
     .skeleton-line {
       height: 1rem;
-      background: #e0e0e0;
-      border-radius: 4px;
-      margin-bottom: 0.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      margin-bottom: 0;
       position: relative;
       overflow: hidden;
 
@@ -159,8 +188,9 @@
     }
 
     .skeleton-pricing {
-      width: 40%;
+      width: 50px;
       height: 1.1rem;
+      flex-shrink: 0;
     }
   }
 
